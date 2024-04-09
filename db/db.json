@@ -1,0 +1,141 @@
+{
+          "acais":[
+                    {
+                              "id": 1,
+                              "acai": true,
+                              "sabor": "Açai Tradicional - Polpanorte",
+                              "estoque": 1000,
+                              "unidade": "KG",
+                              "valor": 27.90,
+                              "imagem": "acai-tradicional"
+                    },
+                    {
+                              "id": 2,
+                              "acai": true,
+                              "sabor": "Açai com Abacaxi - Fruta Brasileira",
+                              "estoque": 1000,
+                              "unidade": "KG",
+                              "valor": 36.90,
+                              "imagem": "acai-abacaxi"
+                    },
+                    {
+                              "id": 3,
+                              "acai": true,
+                              "sabor": "Açai com Banana - Frooty",
+                              "estoque": 1000,
+                              "unidade": "KG",
+                              "valor": 32.90,
+                              "imagem": "acai-banana"
+                    },
+                    {
+                              "id": 4,
+                              "acai": true,
+                              "sabor": "Açai com Cupuaçu - Polpanorte",
+                              "estoque": 1000,
+                              "unidade": "KG",
+                              "valor": 29.90,
+                              "imagem": "acai-cupuacu"
+                    },
+                    {
+                              "id": 5,
+                              "acai": true,
+                              "sabor": "Açai com Guaraná - Polpanorte",
+                              "estoque": 1000,
+                              "unidade": "KG",
+                              "valor": 29.90,
+                              "imagem": "acai-gurana"
+                    },
+                    {
+                              "id": 6,
+                              "acai": true,
+                              "sabor": "Açai com Morango - Frooty",
+                              "estoque": 1000,
+                              "unidade": "KG",
+                              "valor": 32.90,
+                              "imagem": "acai-morango"
+                    }
+          ],
+          "adicionais":[
+                    {
+                              "id": 1,
+                              "acai": false,
+                              "adic":"Adicional de Amendoim",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-amendoim"
+                    },
+                    {
+                              "id": 2,
+                              "acai": false,
+                              "adic":"Adicional de Banana",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-banana"
+                    },
+                    {
+                              "id": 3,
+                              "acai": false,
+                              "adic":"Adicional de Granola",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-granola"
+                    },
+                    {
+                              "id": 4,
+                              "acai": false,
+                              "adic":"Adicional de Kiwi",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-kiwi"
+                    },
+                    {
+                              "id": 5,
+                              "acai": false,
+                              "adic":"Adicional de Leite Condensado",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-leiteCondensado"
+                    },
+                    {
+                              "id": 6,
+                              "acai": false,
+                              "adic":"Adicional de Leite Ninho",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-leiteNinho"
+                    },
+                    {
+                              "id": 7,
+                              "acai": false,
+                              "adic":"Adicional de Morango",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-morango"
+                    },
+                    {
+                              "id": 8,
+                              "acai": false,
+                              "adic":"Adicional de Pacoca",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-pacoca"
+                    },
+                    {
+                              "id": 9,
+                              "acai": false,
+                              "adic":"Adicional de Uva Verde",
+                              "estoque": 10,
+                              "unidade": "UN",
+                              "valor": 1,
+                              "imagem": "adic-uvaVerde"
+                    }
+          ]
+}

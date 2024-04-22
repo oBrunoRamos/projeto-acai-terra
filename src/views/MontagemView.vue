@@ -1,305 +1,480 @@
 <template>
-          <div class="montagem-container">
+  <div class="montagem-view-container">
+    <!-- Pop-up de mensagem -->
+    <div class="div-msg">
+      <span class="msg">{{ mensagem }}</span>
+    </div>
 
-                    <!-- Banner de fundo -->
-                    <div class="div-imagem">
-                              <img src="../../src/assets/logos/banner-acai.png" alt="">
-                    </div>
+    <!-- Banner de fundo -->
+    <div class="div-imagem">
+      <img src="../../src/assets/logos/banner-acai.png" alt="" />
+    </div>
 
-                    <!-- Logo da empresa -->
-                    <div class="div-acaiLogo">
-                              <img src="../../src/assets/logos/Logo-AcaiDaTerra.png" alt="">
-                    </div>
+    <!-- Logo da empresa -->
+    <div class="div-acaiLogo">
+      <img src="../../src/assets/logos/Logo-AcaiDaTerra.png" alt="" />
+    </div>
 
+    <!-- Div de montagem do pedido -->
+    <div class="div-montagemPedido">
+      <h2>Monte seu açaí</h2>
 
-                    <!-- Div de montagem do pedido -->
-                    <div class="div-montagemPedido">
+      <!-- Listagem de sabores de açais -->
+      <div class="grupo-alimentos">
+        <h3>SABORES</h3>
+        <div class="cards-container">
+          <CardComponent
+            v-for="sabor in acais"
+            :key="sabor.id"
+            :produto="sabor"
+            :quantidade="produtosQuantidade"
+            @adicionar-produto="adicionaAoPedido"
+            @remove-produto="removeDoPedido"
+            @sem-estoque="acabouEstoque"
+          />
+        </div>
+      </div>
+      <hr />
 
-                              <h2>Monte seu açaí</h2>
+      <!-- Listagem de adicionais -->
+      <div class="grupo-alimentos">
+        <h3>ADICIONAIS</h3>
+        <div class="cards-container">
+          <CardComponent
+            v-for="adicional in adicionais"
+            :key="adicional.id"
+            :produto="adicional"
+            :quantidade="produtosQuantidade"
+            @adicionar-produto="adicionaAoPedido"
+            @remove-produto="removeDoPedido"
+            @sem-estoque="acabouEstoque"
+          />
+        </div>
+      </div>
 
-                              <!-- Listagem de sabores de açais -->
-                              <div class="agrupado">
-                                        <h3>SABORES</h3>
-                                        <div class="cards-container">
-                                                  <CardComponent 
-                                                  v-for="sabor in sabores" 
-                                                  :key="sabor.id"
-                                                  
-                                                  :produto="sabor"
+      <div class="div-button">
+        <button @click="visualizaPedido = true">CONFIRMAR PEDIDO</button>
+      </div>
+    </div>
 
-                                                  @adcionar-produto="adicionaProduto"
-                                                  @remove-produto="removeProduto"
-                                                  />
-                                        </div>
-                              </div>
-                              <hr>
+    <!-- Componente de confirmação de pedido -->
 
-                              <!-- Listagem de adicionais -->
-                              <div class="agrupado">
-                                        <h3>ADICIONAIS</h3>
-                                        <div class="cards-container">
-                                                  <CardComponent 
-                                                  v-for="adicional in adicionais" 
-                                                  :key="adicional.id"
-                                                  
-                                                  :produto="adicional"
-
-                                                  @adcionar-produto="adicionaProduto"
-                                                  @remove-produto="removeProduto"
-                                                  />
-                                        </div>
-                              </div>
-
-                              <div class="div-button">
-                                        <button >ENVIAR</button>
-                              </div>
-                    </div>
-          </div>
+    <VisualizaPedido
+      v-if="visualizaPedido"
+      :pedido="pedidoMontado"
+      :quantidade="produtosQuantidade"
+      @clique-fora="visualizaPedido = false"
+      @pedido-confirmado="enviaPedido"
+      @adiciona-visualiza="adicionaAoPedido"
+      @remove-visualiza="removeDoPedido"
+      @deleta-produto="removeDoPedido"
+      @atualiza-card-produto="adicionaAoPedido"
+      :confirmaPedido="true"
+      class="visualiza-pedido"
+    />
+  </div>
 </template>
 
 <script>
+
 import CardComponent from '@/components/CardComponent.vue'
+import VisualizaPedido from '@/components/VisualizaPedido.vue'
 
 export default {
           data(){
-                    return{
-                              fetched: false,
-                              sabores:[
+                    return{             
+                              produtosQuantidade:[
                                         {
-                                                  "id": 1,
-                                                  "acai": true,
-                                                  "sabor": "Açai Tradicional - Polpanorte",
-                                                  "estoque": 1000,
-                                                  "unidade": "KG",
-                                                  "valor": 27.90,
-                                                  "imagem": "/src/assets/acais/acai-tradicional.png"
+                                                  "nome": "Açai Tradicional - Polpanorte",
+                                                  "quantidade": 0,
                                         },
                                         {
-                                                  "id": 2,
-                                                  "acai": true,
-                                                  "sabor": "Açai com Abacaxi - Fruta Brasileira",
-                                                  "estoque": 1000,
-                                                  "unidade": "KG",
-                                                  "valor": 36.90,
-                                                  "imagem": "/src/assets/acais/acai-abacaxi.png"
+                                                  "nome": "Açai com Abacaxi - Fruta Brasileira",
+                                                  "quantidade": 0,
                                         },
                                         {
-                                                  "id": 3,
-                                                  "acai": true,
-                                                  "sabor": "Açai com Banana - Frooty",
-                                                  "estoque": 1000,
-                                                  "unidade": "KG",
-                                                  "valor": 32.90,
-                                                  "imagem": "/src/assets/acais/acai-banana.png"
+                                                  "nome": "Açai com Banana - Frooty",
+                                                  "quantidade": 0,
                                         },
                                         {
-                                                  "id": 4,
-                                                  "acai": true,
-                                                  "sabor": "Açai com Cupuaçu - Polpanorte",
-                                                  "estoque": 1000,
-                                                  "unidade": "KG",
-                                                  "valor": 29.90,
-                                                  "imagem": "/src/assets/acais/acai-cupuacu.png"
+                                                  "nome": "Açai com Cupuaçu - Polpanorte",
+                                                  "quantidade": 0,
                                         },
                                         {
-                                                  "id": 5,
-                                                  "acai": true,
-                                                  "sabor": "Açai com Guaraná - Polpanorte",
-                                                  "estoque": 1000,
-                                                  "unidade": "KG",
-                                                  "valor": 29.90,
-                                                  "imagem": "/src/assets/acais/acai-gurana.png"
+                                                  "nome": "Açai com Guaraná - Polpanorte",
+                                                  "quantidade": 0,
                                         },
                                         {
-                                                  "id": 6,
-                                                  "acai": true,
-                                                  "sabor": "Açai com Morango - Frooty",
-                                                  "estoque": 1000,
-                                                  "unidade": "KG",
-                                                  "valor": 32.90,
-                                                  "imagem": "/src/assets/acais/acai-morango.png"
+                                                  "nome": "Açai com Morango - Frooty",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Amendoim",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Banana",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Granola",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Kiwi",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Leite Condensado",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Leite Ninho",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Morango",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Pacoca",
+                                                  "quantidade": 0,
+                                        },
+                                        {
+                                                  "nome": "Adicional de Uva Verde",
+                                                  "quantidade": 0,
                                         }
                               ],
-                              adicionais: [
-                                        {
-                                        "id": 1,
-                                        "acai": false,
-                                        "adic":"Adicional de Amendoim",
-                                        "estoque": 10,
-                                        "unidade": "UN",
-                                        "valor": 1,
-                                        "imagem": "/src/assets/adicionais/adic-amendoim.png"
-                                        },
-                                        {
-                                                  "id": 2,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Banana",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-banana.png"
-                                        },
-                                        {
-                                                  "id": 3,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Granola",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-granola.png"
-                                        },
-                                        {
-                                                  "id": 4,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Kiwi",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-kiwi.png"
-                                        },
-                                        {
-                                                  "id": 5,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Leite Condensado",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-leiteCondensado.png"
-                                        },
-                                        {
-                                                  "id": 6,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Leite Ninho",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-leiteNinho.png"
-                                        },
-                                        {
-                                                  "id": 7,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Morango",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-morango.png"
-                                        },
-                                        {
-                                                  "id": 8,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Pacoca",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-pacoca.png"
-                                        },
-                                        {
-                                                  "id": 9,
-                                                  "acai": false,
-                                                  "adic":"Adicional de Uva Verde",
-                                                  "estoque": 10,
-                                                  "unidade": "UN",
-                                                  "valor": 1,
-                                                  "imagem": "/src/assets/adicionais/adic-uvaVerde.png"
+
+                              visualizaPedido: false,
+
+                              acais:[], 
+                              adicionais:[],
+
+                              mensagem:"",
+
+                              pedidoMontado:{
+                                        acais:[         
+                                        ],
+                                        adicionais:[        
+                                        ]
+                              },           
+                    }
+          },
+          methods:{
+                    adicionaAoPedido(produto){
+
+                              const acai = this.pedidoMontado.acais;
+                              const add = this.pedidoMontado.adicionais;
+
+                              if(produto.acai){
+                                        let produtoVelho = acai.find( item => item.id === produto.id)
+
+                                        if(produtoVelho){
+                                                  acai.forEach( (item, index) =>{
+                                                            if( item.id === produto.id){
+                                                                      acai.splice(index,1)
+                                                                      acai.push(produto)
+                                                            }
+                                                  })
+                                        }else{
+                                                  acai.push(produto)
                                         }
-                              ],
-                              saboresPedido:[
+                              }else{
+                                        let produtoVelho = add.find( item => item.id === produto.id)
 
-                              ],
-                              adicionaisPedido:[
+                                        if(produtoVelho){
+                                                  add.forEach( (item, index) =>{
+                                                            if( item.id === produto.id){
+                                                                      add.splice(index,1)
+                                                                      add.push(produto)
+                                                            }
+                                                  })
+                                        }else{
+                                                  add.push(produto)
+                                        }
+                              }
+                    },
+                    removeDoPedido(produto){
+                              const acai = this.pedidoMontado.acais;
+                              const add = this.pedidoMontado.adicionais;
 
-                              ]
+                              console.log(produto)
+
+                              if(produto.acai){
+                                        let produtoVelho = acai.find( item => item.id == produto.id)
+
+                                 
+                                        if(produtoVelho){
+                                                  acai.forEach( (item, index) =>{
+                                                            if( item.id == produto.id){
+
+                                                                      if(produto.quantidade == 0){
+                                                                                acai.splice(index, 1)
+                                                                      }else{
+                                                                                acai.splice(index,1)
+                                                                                acai.push(produto)
+                                                                      }
+                                                            }
+                                                  })
+                                        }
+                              }else{
+                                        let produtoVelho = add.find( item => item.id == produto.id)
+
+                                        
+
+                                        if(produtoVelho){
+                                                  add.forEach( (item, index) =>{
+                                                            if( item.id == produto.id){
+                                                                      if(produto.quantidade == 0){
+                                                                                add.splice(index, 1)
+                                                                      }else{
+                                                                                add.splice(index,1)
+                                                                                add.push(produto)
+                                                                      }
+                                                            }
+                                                  })
+                                        }
+                              }
+                    },
+                    acabouEstoque(){
+                              const msg = document.querySelector(".msg");
+
+                              this.mensagem = "O estoque  deste produto acabou"
+
+                              msg.style.z_index = "500"
+                              msg.style.display = "block"
+
+                              setTimeout(()=>{
+                                        msg.style.display = "none"
+                                        msg.style.z_index = "0"
+                                        this.mensagem = ""
+                              }, 1500)
+                    },
+                    async enviaPedido(pedido){
+
+                              if(this.pedidoMontado.acais.length !=  0 || this.pedidoMontado.adicionais.length != 0){
+                                        const acais = this.pedidoMontado.acais;
+                                        const adicionais = this.pedidoMontado.adicionais;
+                                        
+                                        const pedidos = "http://localhost:3000/pedidos";
+
+                                        await fetch(pedidos).then(r => r.json()).then(r=>{
+                                                  let numId =0
+                                                  r.forEach(() =>{
+                                                            numId+=1
+                                                            console.log(r);
+                                                  })
+                                                  pedido.id = `${numId}`
+                                        })
+                                        if(pedido.nome != ""){
+                                                  await fetch(pedidos, {
+                                                            method: "POST",
+                                                            headers:{
+                                                                      "Content-Type": "application/json"
+                                                            },
+                                                            body: JSON.stringify(pedido)
+                                                  })
+                                                  acais.forEach( produto =>{
+                                                            
+                                                            fetch(`http://localhost:3000/acais/${produto.id}`)
+                                                            .then( response => response.json())
+                                                            .then( response => {
+                                                            
+                                                                      response.estoque = response.estoque - (produto.quantidade * 25)
+
+                                                                      fetch(`http://localhost:3000/acais/${produto.id}`, {
+                                                                                method: "PUT",
+                                                                                headers:{
+                                                                                          "Content-Type": "application/json"
+                                                                                },
+                                                                                body: JSON.stringify(response)
+                                                                      })
+                                                            })
+                                                            
+                                                  })
+                                                  adicionais.forEach( produto =>{
+                                                            
+                                                            fetch(`http://localhost:3000/adicionais/${produto.id}`)
+                                                            .then( response => response.json())
+                                                            .then( response => {
+
+                                                                                response.estoque = response.estoque - produto.quantidade
+
+                                                                                fetch(`http://localhost:3000/adicionais/${produto.id}`, {
+                                                                                          method: "PUT",
+                                                                                          headers:{
+                                                                                                    "Content-Type": "application/json"
+                                                                                          },
+                                                                                          body: JSON.stringify(response)
+                                                                                })
+                                                                      })
+                                                                      
+                                                            })
+                                                  }  
+                              }
+
+                                                   
+                    },
+                    async fetchDB(){
+                    
+                    const acais = "http://localhost:3000/acais"
+                    const adicionais = "http://localhost:3000/adicionais"
+
+                    
+                    await fetch(acais).then(r => r.json()).then(r=>{
+                              this.acais = r
+                    })
+                    await fetch(adicionais).then(r => r.json()).then(r=>{
+                              this.adicionais = r
+                    })
                     }
           },
           components:{
-                    CardComponent
+                    CardComponent,
+                    VisualizaPedido
           },
-          methods:{
-                    adicionaProduto(infoProduto){
-                              console.log(infoProduto)
-                    },
-                    removeProduto(infoProduto){
-                              console.log(infoProduto)
-                    }
+          created(){
+                    this.fetchDB()
           }
 }
 </script>
 
 <style>
-          .montagem-container{
-                    display: flex;
-                    flex-direction: column;
+/* Estilização da View */
+.montagem-view-container {
+  display: flex;
+  flex-direction: column;
 
-                    width: 99.2vw;
+  width: 100%;
 
-                    background: #59185B;
-          }
+  background: #59185b;
+}
 
-          .div-imagem{
-                    width: 100vw;
-                    height: fit-content;
+/* Estilização da mensagem de estoque */
+.div-msg {
+  position: fixed;
 
-                    margin-bottom: -8px;
-          }
-          .div-imagem img{
-                    width: 99.13vw;
-          }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-          .div-acaiLogo{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+  height: fit-content;
+  width: 100vw;
 
-                    height: 4rem;
+  z-index: 3;
 
-                    z-index: 1;
+  padding-top: 8rem;
 
-                    background: #1f1d22;
-          }
+  background: transparent;
+}
+.msg {
+  display: none;
 
+  text-align: center;
 
+  height: 3rem;
+  width: 20rem;
 
-          .div-montagemPedido{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
+  padding-top: 2rem;
 
-                    width: 100vw;
-                    height: fit-content;
-                    margin-top: 10rem;
+  border-radius: 8px;
 
-                    color: #fff;
-          }
-        
-          .div-montagemPedido hr{
-                    width: 80%;
-          }
+  background: #47ca18;
+  font-weight: bolder;
+}
 
-          .agrupado{
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;             
+/* Estilização da Imagem de Banner */
+.div-imagem {
+  width: 100%;
+  height: fit-content;
 
-                    margin: 4rem;
-          }
-          .agrupado h3{
-                    font-size: 25pt;
-          }
+  margin-bottom: -8px;
+}
+.div-imagem img {
+  width: 100%;
+}
 
-          .cards-container{
-                    display: flex;
-                    flex-flow: wrap;
-                    justify-content: space-around;
+/* Estilização do logo da empresa */
+.div-acaiLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-                    margin-top: 2rem;
-                    width: 50vw;
-          
-          }
+  height: 4rem;
+  width: 100%;
 
-          .alerta-quantidade{
-                    position: fixed;
+  z-index: 1;
 
-                    background: #fff;
-          }
+  background: #1f1d22;
+}
+
+/* Estilização da div geral de montagem de pedidos */
+.div-montagemPedido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  height: fit-content;
+  margin-top: 10rem;
+
+  color: #fff;
+}
+.div-montagemPedido hr {
+  width: 80%;
+}
+
+/* Estilização das duas divs de alimentos */
+.grupo-alimentos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+.grupo-alimentos h3 {
+  font-size: 25pt;
+}
+
+/* Estilização da disposição dos cards */
+.cards-container {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+
+  margin-top: 2rem;
+  width: 50vw;
+}
+
+/* Estilização do botão de envio do pedido */
+.div-button {
+  display: flex;
+  justify-content: end;
+  width: 80%;
+
+  padding: 3rem;
+}
+.div-button button {
+  margin-right: 5rem;
+
+  height: 5rem;
+  width: 15rem;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #47ca18;
+  color: #fff;
+
+  font-weight: bold;
+}
+
+.visualiza-pedido {
+  position: fixed;
+}
 </style>

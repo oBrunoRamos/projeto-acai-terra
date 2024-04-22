@@ -1,230 +1,320 @@
 <template>
-          <div class="card-container">
-                    <div class="div-img">
+  <div class="card-container">
+    <div class="div-img">
+      <!-- Imagem do Produto -->
 
-                              <!-- Imagem do Produto -->
+      <!-- Imagens Açais -->
+      <img
+        v-if="produto.imagem == 'acai-tradicional'"
+        class="imagem"
+        src="../assets/acais/acai-tradicional.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-abacaxi'"
+        class="imagem"
+        src="../assets/acais/acai-abacaxi.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-banana'"
+        class="imagem"
+        src="../assets/acais/acai-banana.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-cupuacu'"
+        class="imagem"
+        src="../assets/acais/acai-cupuacu.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-guarana'"
+        class="imagem"
+        src="../assets/acais/acai-guarana.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-morango'"
+        class="imagem"
+        src="../assets/acais/acai-morango.png"
+        :alt="produto.alt"
+      />
 
-                              <img v-if="produto.acai" :src="acaiImage">
-                              <img v-else :src="adicImage" alt="">
+      <!-- Imagens Adicionais -->
+      <img
+        v-if="produto.imagem == 'adic-amendoim'"
+        class="imagem"
+        src="../assets/adicionais/adic-amendoim.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-banana'"
+        class="imagem"
+        src="../assets/adicionais/adic-banana.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-granola'"
+        class="imagem"
+        src="../assets/adicionais/adic-granola.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-kiwi'"
+        class="imagem"
+        src="../assets/adicionais/adic-kiwi.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-leiteCondensado'"
+        class="imagem"
+        src="../assets/adicionais/adic-leiteCondensado.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-leiteNinho'"
+        class="imagem"
+        src="../assets/adicionais/adic-leiteNinho.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-morango'"
+        class="imagem"
+        src="../assets/adicionais/adic-morango.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-pacoca'"
+        class="imagem"
+        src="../assets/adicionais/adic-pacoca.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-uvaVerde'"
+        class="imagem"
+        src="../assets/adicionais/adic-uvaVerde.png"
+        :alt="produto.alt"
+      />
+    </div>
+    <div class="div-info">
+      <!-- Nome do Produto -->
 
-                    </div>
-                    <div class="div-info">
+      <h4>{{ produto.nome }}</h4>
 
-                              <!-- Nome do Produto -->
+      <!-- Valor do produto -->
+      <div class="div-preco">
+        <p v-if="produto.acai">Valor KG</p>
+        <p v-else>Valor adic.</p>
+        <h2>{{ valorConvertido }}</h2>
+      </div>
 
-                              <h4 v-if="produto.acai">{{ produto.sabor }}</h4>
-                              <h4 v-else>{{ produto.adic }}</h4>
+      <p v-if="produto.acai"><b>Selecione a quantidade</b></p>
+      <p v-else><b>Selecione a quantidade de adicionais</b></p>
 
-                              <!-- Valor do produto -->
-                              <div class="div-preco">
-                                        <p v-if="produto.acai">Valor KG</p>
-                                        <p v-else>Valor adic.</p>
-                                        <h2>{{ valorConvertido }}</h2>
-                              </div>
+      <!-- Contador de quantidade de itens selecionados -->
+      <div class="div-contadora">
+        <button class="mais" @click="quant++"><Plus /></button>
 
-                              <p v-if="produto.acai"><b>Selecione a quantidade</b></p>
-                              <p v-else><b>Selecione a quantidade de adicionais</b></p>
-                              <!-- Contador de quantidade de itens selecionados -->
-                              <div class="div-contadora">
-                              
-                                        <button class="mais" @click="adicionaAoPedido(produto.id, produto.acai)">
-                                                  <Plus/>
-                                        </button>
-                                        <p>{{ quant }}</p>
-                                        <button class="menos" @click="removeDoPedido(produto.id, produto.acai)">
-                                                  <Minus/>
-                                        </button>
-                              </div>
+        <p>{{ quant }}</p>
 
-                              <!-- Mensadem informativa ai cliente -->
-                              <p v-if="produto.acai">Cada bola de sorvete pesa em média 25g</p>
+        <button class="menos" @click="quant--"><Minus /></button>
+      </div>
 
-                    </div>
-          </div>
+      <!-- Mensadem informativa ai cliente -->
+      <p v-if="produto.acai">Cada bola de sorvete pesa em média 25g</p>
+    </div>
+  </div>
 </template>
 
 <script>
-
-import {Plus} from 'lucide-vue-next';
-import {Minus} from 'lucide-vue-next';
+import { Plus } from "lucide-vue-next";
+import { Minus } from "lucide-vue-next";
 
 export default {
-          data(){
-                    return{
-                             valorConvertido: null,
-                             quant: 0,
-                             acaiImage: `../assets/acais/${this.produto.image}.png` ,
-                             adicImage:  `../assets/adicionais/${this.produto.image}.png`
-                    }
-          },
-          components:{
-                    Plus,
-                    Minus
-          },
-          props:{
-                    produto:Object
-          },
-          methods:{
-                    converteValor(){
-                              const valor = this.produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-                              this.valorConvertido = valor;
-                    },
-                    // adicionaAoPedido(produtoId, acai){
-                    //           this.quant++;
-                    //           let infoProduto = [produtoId, acai] ;
-                              
+  components: {
+    Plus,
+    Minus,
+  },
+  props: {
+    produto: Object,
+    quantidade:Array
+  },
+  data() {
+    return {
+      valorConvertido: null,
+      quant: 0,
+    };
+  },
+  methods: {
+    converteValor() {
+      const valor = this.produto.valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+      this.valorConvertido = valor;
+    },
+  },
+  watch: {
+    quant(novoValor, valorAntigo) {
+      let url;
 
-                    //           // console.log(produtoId, acai);
-                    
-                    // },
-                    // removeDoPedido(produtoId, acai){
-                    //           this.quant--;
+      if (this.produto.acai) {
+        url = "http://localhost:3000/acais";
+      } else {
+        url = "http://localhost:3000/adicionais";
+      }
 
-                              
-                    //           
-                    //           // console.log(produtoId, acai);
-          
-                    // }
-                    
-          },
-          watch:{
-                    quant(novoValor, valorAntigo){     
-                              const acai = this.produto.acai;
-                              const produtoId = this.produto.id
-                              let infoProduto = [produtoId, acai] ;
+      if (novoValor < 0) {
+        this.quant = 0;
+      } else {
+        fetch(url + `/${this.produto.id}`)
+          .then((response) => response.json())
+          .then((response) => {
+            let estoque = response.estoque;
 
-                              if(novoValor<0){
-                                        this.quant = 0
-                              }
+            let quantPedido = this.produto.acai ? this.quant * 25 : this.quant;
 
-                              if(novoValor>valorAntigo){
-                                        this.$emit('adicionar-produto', infoProduto);
-                              }
-                              else if(novoValor < valorAntigo){
-                                        this.$emit('remove-produto', infoProduto);
-                              }
-                    }
-          },
-          created(){
-                    this.converteValor()
-          },
-}
+            if (quantPedido <= estoque) {
+              let produto = {
+                id: this.produto.id,
+                acai: this.produto.acai,
+                nome: this.produto.nome,
+                valor: this.produto.valor,
+                imagem: this.produto.imagem,
+                quantidade: this.quant,
+              };
+
+              if (novoValor > valorAntigo) {
+                this.$emit("adicionar-produto", produto);
+              } else if (novoValor < valorAntigo) {
+                this.$emit("remove-produto", produto);
+              }
+            } else {
+              this.quant = valorAntigo;
+              this.$emit("sem-estoque");
+            }
+          });
+      }
+    },
+  },
+  created() {
+    this.converteValor();
+  },
+};
 </script>
 
 <style scoped>
-          .card-container{         
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: space-around;
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 
-                    height: 23rem;
-                    width: 15rem;
+  height: 23rem;
+  width: 15rem;
 
-                    padding: 0.5rem;
-                    margin: 1rem;
+  padding: 0.5rem;
+  margin: 1rem;
 
-                    background: #ffffff;
-                    color: #000;
-                    box-shadow: 0 0 20px rgba(0, 0, 0, .7);
+  background: #ffffff;
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
 
-                    border-radius: 15px;
-          }
+  border-radius: 15px;
+}
 
-          /* Div com a imagem do produto */
-          .div-img{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                 
-                    height: 25rem;
-                    width: 145px;
+/* Div com a imagem do produto */
+.div-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-                    border-radius: 5px;
-          }
+  height: 90%;
+  width: 80%;
 
+  border-radius: 5px;
+}
+.di-img img {
+  height: fit-content;
+  max-height: 40%;
+  width: fit-content;
+}
 
-          /* Div com as informações gerais do item */
-          .div-info{
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
+/* Div com as informações gerais do item */
+.div-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 
-                    height: fill;
-                    width: 80%;
+  height: fill;
+  width: 80%;
 
-                    /* background: #213; */
-          }
-                    /* Div com preço do produto */
-                    .div-preco{
-                              display: flex;
-                              justify-content: space-between;
-                              align-items: end;
-                    }
+  /* background: #213; */
+}
+/* Div com preço do produto */
+.div-preco {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
 
+/* Div com contador */
+.div-contadora {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  padding: 0 0px;
 
-                    /* Div com contador */
-                    .div-contadora{
-                              display: flex;
-                              justify-content: center;
-                              align-items: center;
+  /* background: #456; */
 
-                              padding: 0 0px;
+  height: 30px;
+  width: min-content;
+}
 
-                              /* background: #456; */
+/* P que comstra a quantidade de itens */
+.div-contadora p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-                              height:30px;
-                              width: min-content;
+  height: 2.2rem;
+  width: 2.2rem;
+  margin: -5px;
 
-                    }
+  background: #ffffff;
 
-                              /* P que comstra a quantidade de itens */
-                              .div-contadora p{
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
+  border: 1px solid;
+  border-radius: 20px;
 
-                                        height: 2.2rem;
-                                        width: 2.2rem;
-                                        margin: -5px;
+  z-index: 2;
+}
 
-                                        background: #ffffff;
+.div-contadora button {
+  display: flex;
+  align-items: center;
 
-                                        border: 1px solid;
-                                        border-radius: 20px;
+  height: 1.5rem;
+  width: 5rem;
+  padding: 0 15px;
 
-                                        z-index: 2;
-                              }
+  font-weight: 600;
+  font-size: 20pt;
 
-                              .div-contadora button{
-                                        display: flex;
-                                        align-items: center;
+  color: #ffffff;
+  background: #793892;
 
-                                        height: 1.5rem;
-                                        width: 5rem;
-                                        padding: 0 15px;
+  border: none;
 
-                                        font-weight: 600;
-                                        font-size: 20pt;
-                                        
-
-                                        color: #ffffff;
-                                        background: #793892;
-
-                                        border: none;
-
-                                        cursor: pointer;
-                              }
-                              .mais{
-                                        justify-content: left;
-                                        border-radius: 20px 0 0 20px;
-                              }
-                              .menos{
-                                        justify-content: right;
-                                        border-radius: 0 20px 20px 0;
-
-                              }
-
-          
+  cursor: pointer;
+}
+.mais {
+  justify-content: left;
+  border-radius: 20px 0 0 20px;
+}
+.menos {
+  justify-content: right;
+  border-radius: 0 20px 20px 0;
+}
 </style>

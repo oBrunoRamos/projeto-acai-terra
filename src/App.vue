@@ -1,31 +1,34 @@
 <template>
           <div id="app">
                     <NavBar class="navbar"/>
-                    <MontagemView/>
+                    <router-view>
+                    </router-view>
           </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue'
-import MontagemView from './views/MontagemView.vue'
 
 
 export default {
           components:{
                     NavBar,
-                    MontagemView
+                    // MontagemView,
+                    // PedidosView
           }
 }
 </script>
 
 <style>
           #app{       
-                    font-family: Arial, Helvetica, sans-serif;   
+                    font-family: Arial, Helvetica, sans-serif; 
+                    margin: 0;
+                    padding: 0; 
           }
 
           .navbar{
                     position: fixed;
-                    z-index: 100;
+                    z-index: 50;
           }
 
 </style>

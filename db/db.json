@@ -4,7 +4,7 @@
       "id": "1",
       "acai": true,
       "nome": "Açai Tradicional - Polpanorte",
-      "estoque": 925,
+      "estoque": 975,
       "unidade": "Gramas",
       "valor": 27.9,
       "imagem": "acai-tradicional"
@@ -221,36 +221,6 @@
           "quantidade": 2
         }
       ]
-    },
-    {
-      "id": "0",
-      "nome": "fgh",
-      "forma_pagamento": "Dinheiro",
-      "total": 0.8225,
-      "adicionais": []
-    },
-    {
-      "id": "0",
-      "nome": "Bruno Ramos",
-      "forma_pagamento": "Dinheiro",
-      "total": 2,
-      "adicionais": [
-        {
-          "id": "9",
-          "acai": false,
-          "nome": "Adicional de Uva Verde",
-          "valor": 1,
-          "imagem": "adic-uvaVerde",
-          "quantidade": 2
-        }
-      ]
-    },
-    {
-      "id": "0",
-      "nome": "teste2",
-      "forma_pagamento": "Dinheiro",
-      "total": 1.3949999999999998,
-      "adicionais": []
     }
   ]
 }

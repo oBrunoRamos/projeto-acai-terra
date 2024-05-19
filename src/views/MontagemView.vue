@@ -204,11 +204,9 @@ export default {
                               if(produto.acai){
                                         let produtoVelho = acai.find( item => item.id == produto.id)
 
-                                 
                                         if(produtoVelho){
                                                   acai.forEach( (item, index) =>{
                                                             if( item.id == produto.id){
-
                                                                       if(produto.quantidade == 0){
                                                                                 acai.splice(index, 1)
                                                                       }else{
@@ -219,13 +217,12 @@ export default {
                                                   })
                                         }
                               }else{
-                                        let produtoVelho = add.find( item => item.id == produto.id)
-
-                                        
+                                        let produtoVelho = add.find( item => item.id == produto.id)  
 
                                         if(produtoVelho){
                                                   add.forEach( (item, index) =>{
                                                             if( item.id == produto.id){
+
                                                                       if(produto.quantidade == 0){
                                                                                 add.splice(index, 1)
                                                                       }else{
@@ -350,7 +347,6 @@ export default {
 
   background: #59185b;
 }
-
 /* Estilização da mensagem de estoque */
 .div-msg {
   position: fixed;
@@ -475,6 +471,6 @@ export default {
 }
 
 .visualiza-pedido {
-  position: fixed;
+          position: fixed;
 }
 </style>

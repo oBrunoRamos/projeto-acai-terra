@@ -281,7 +281,6 @@ export default {
 
   background: rgba(0, 0, 0, 0.5);
 }
-
 /* Estilização do modal */
 .pedido-modal-container {
   display: flex;
@@ -297,7 +296,6 @@ export default {
 
   border-radius: 10px;
 }
-
 /* Estilização da lista de itens do pedido */
 .itens-lista {
   display: flex;
@@ -314,7 +312,6 @@ export default {
 
   border-radius: 10px;
 }
-
 .itens-lista li {
   display: flex;
 
@@ -326,13 +323,11 @@ export default {
   height: 3rem;
   width: 40%;
 }
-
 .itens-lista li img {
   height: fit-content;
   max-height: 80%;
   width: fit-content;
 }
-
 /* Estilização da area dos dados do usuário no pedido */
 .dados-pedido {
   display: flex;
@@ -342,12 +337,10 @@ export default {
   width: 90%;
   height: 20%;
 }
-
 .info-user {
   display: flex;
   flex-direction: column;
 }
-
 .info-user input,
 select {
   background: #d9d9d9;
@@ -359,7 +352,6 @@ select {
   margin: 2%;
   width: 150%;
 }
-
 /* Estilização do botão */
 .envia-pedido {
   height: 4rem;
@@ -375,7 +367,6 @@ select {
 
   cursor: pointer;
 }
-
 .div-contadora {
   display: flex;
   justify-content: center;
@@ -388,7 +379,6 @@ select {
   height: 30px;
   width: min-content;
 }
-
 /* P que comstra a quantidade de itens */
 .div-contadora p {
   display: flex;
@@ -406,7 +396,6 @@ select {
 
   z-index: 2;
 }
-
 .div-contadora button {
   display: flex;
   align-items: center;

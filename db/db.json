@@ -132,7 +132,11 @@
       "id": "9",
       "acai": false,
       "nome": "Adicional de Uva Verde",
+<<<<<<< HEAD
       "estoque": 0,
+=======
+      "estoque": 6,
+>>>>>>> 835d38c05f19a36eb8cd51995a8fc3787035bf24
       "unidade": "UN",
       "valor": 1,
       "imagem": "adic-uvaVerde"
@@ -221,6 +225,7 @@
           "quantidade": 2
         }
       ]
+<<<<<<< HEAD
     },
     {
       "id": "0",
@@ -237,6 +242,8 @@
           "quantidade": 3
         }
       ]
+=======
+>>>>>>> 835d38c05f19a36eb8cd51995a8fc3787035bf24
     }
   ]
 }

@@ -106,6 +106,14 @@ export default {
           const pedidos = "http://localhost:3000/pedidos";
           const concluidos = "http://localhost:3000/concluidos";
 
+          await fetch( pedidos + `/${pedido.id}`, {
+           method: "DELETE",
+          });
+
+          await fetch(concluidos).then(r=>r.json()).then(r=>{
+                    pedido.id = r.length
+          })
+
           let pedidoConcluido = JSON.stringify(pedido)
 
 
@@ -116,11 +124,6 @@ export default {
                     },
                     body: pedidoConcluido
           })
-
-
-          await fetch( pedidos + `/${pedido.id}`, {
-           method: "DELETE",
-          });
 
 
           await fetch(pedidos)

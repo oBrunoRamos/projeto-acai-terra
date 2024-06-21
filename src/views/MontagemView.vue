@@ -27,7 +27,7 @@
             v-for="sabor in acais"
             :key="sabor.id"
             :produto="sabor"
-            :quantidade="produtosQuantidade"
+            :atualiza="attProduto"
             @adicionar-produto="adicionaAoPedido"
             @remove-produto="removeDoPedido"
             @sem-estoque="acabouEstoque"
@@ -43,8 +43,8 @@
           <CardComponent
             v-for="adicional in adicionais"
             :key="adicional.id"
-            :produto="adicional"
-            :quantidade="produtosQuantidade"
+            :produto="adicional" 
+            :atualiza="attProduto"
             @adicionar-produto="adicionaAoPedido"
             @remove-produto="removeDoPedido"
             @sem-estoque="acabouEstoque"
@@ -62,7 +62,6 @@
     <VisualizaPedido
       v-if="visualizaPedido"
       :pedido="pedidoMontado"
-      :quantidade="produtosQuantidade"
       @clique-fora="visualizaPedido = false"
       @pedido-confirmado="enviaPedido"
       @adiciona-visualiza="adicionaAoPedido"
@@ -76,265 +75,198 @@
 </template>
 
 <script>
-
-import CardComponent from '@/components/CardComponent.vue'
-import VisualizaPedido from '@/components/VisualizaPedido.vue'
+import CardComponent from "@/components/CardComponent.vue";
+import VisualizaPedido from "@/components/VisualizaPedido.vue";
 
 export default {
-          data(){
-                    return{             
-                              produtosQuantidade:[
-                                        {
-                                                  "nome": "Açai Tradicional - Polpanorte",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Açai com Abacaxi - Fruta Brasileira",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Açai com Banana - Frooty",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Açai com Cupuaçu - Polpanorte",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Açai com Guaraná - Polpanorte",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Açai com Morango - Frooty",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Amendoim",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Banana",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Granola",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Kiwi",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Leite Condensado",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Leite Ninho",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Morango",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Pacoca",
-                                                  "quantidade": 0,
-                                        },
-                                        {
-                                                  "nome": "Adicional de Uva Verde",
-                                                  "quantidade": 0,
-                                        }
-                              ],
+  data() {
+    return {
+      attProduto: null,
 
-                              visualizaPedido: false,
+      visualizaPedido: false,
 
-                              acais:[], 
-                              adicionais:[],
+      acais: [],
+      adicionais: [],
 
-                              mensagem:"",
+      mensagem: "",
 
-                              pedidoMontado:{
-                                        acais:[         
-                                        ],
-                                        adicionais:[        
-                                        ]
-                              },           
-                    }
-          },
-          methods:{
-                    adicionaAoPedido(produto){
+      pedidoMontado: {
+        acais: [],
+        adicionais: [],
+      },
+    };
+  },
+  methods: {
+    adicionaAoPedido(produto) {
+      this.attProduto = produto;
 
-                              const acai = this.pedidoMontado.acais;
-                              const add = this.pedidoMontado.adicionais;
+      const acai = this.pedidoMontado.acais;
+      const add = this.pedidoMontado.adicionais;
 
-                              if(produto.acai){
-                                        let produtoVelho = acai.find( item => item.id === produto.id)
+      if (produto.acai) {
+        let produtoVelho = acai.find((item) => item.id === produto.id);
 
-                                        if(produtoVelho){
-                                                  acai.forEach( (item, index) =>{
-                                                            if( item.id === produto.id){
-                                                                      acai.splice(index,1)
-                                                                      acai.push(produto)
-                                                            }
-                                                  })
-                                        }else{
-                                                  acai.push(produto)
-                                        }
-                              }else{
-                                        let produtoVelho = add.find( item => item.id === produto.id)
+        if (produtoVelho) {
+          acai.forEach((item, index) => {
+            if (item.id === produto.id) {
+              acai.splice(index, 1);
+              acai.push(produto);
+            }
+          });
+        } else {
+          acai.push(produto);
+        }
+      } else {
+        let produtoVelho = add.find((item) => item.id === produto.id);
 
-                                        if(produtoVelho){
-                                                  add.forEach( (item, index) =>{
-                                                            if( item.id === produto.id){
-                                                                      add.splice(index,1)
-                                                                      add.push(produto)
-                                                            }
-                                                  })
-                                        }else{
-                                                  add.push(produto)
-                                        }
-                              }
-                    },
-                    removeDoPedido(produto){
-                              const acai = this.pedidoMontado.acais;
-                              const add = this.pedidoMontado.adicionais;
+        if (produtoVelho) {
+          add.forEach((item, index) => {
+            if (item.id === produto.id) {
+              add.splice(index, 1);
+              add.push(produto);
+            }
+          });
+        } else {
+          add.push(produto);
+        }
+      }
+    },
+    removeDoPedido(produto) {
+      this.attProduto = produto;
 
-                              console.log(produto)
+      const acai = this.pedidoMontado.acais;
+      const add = this.pedidoMontado.adicionais;
 
-                              if(produto.acai){
-                                        let produtoVelho = acai.find( item => item.id == produto.id)
+      if (produto.acai) {
+        let produtoVelho = acai.find((item) => item.id == produto.id);
 
-                                        if(produtoVelho){
-                                                  acai.forEach( (item, index) =>{
-                                                            if( item.id == produto.id){
-                                                                      if(produto.quantidade == 0){
-                                                                                acai.splice(index, 1)
-                                                                      }else{
-                                                                                acai.splice(index,1)
-                                                                                acai.push(produto)
-                                                                      }
-                                                            }
-                                                  })
-                                        }
-                              }else{
-                                        let produtoVelho = add.find( item => item.id == produto.id)  
+        if (produtoVelho) {
+          acai.forEach((item, index) => {
+            if (item.id == produto.id) {
+              if (produto.quantidade == 0) {
+                acai.splice(index, 1);
+              } else {
+                acai.splice(index, 1);
+                acai.push(produto);
+              }
+            }
+          });
+        }
+      } else {
+        let produtoVelho = add.find((item) => item.id == produto.id);
 
-                                        if(produtoVelho){
-                                                  add.forEach( (item, index) =>{
-                                                            if( item.id == produto.id){
+        if (produtoVelho) {
+          add.forEach((item, index) => {
+            if (item.id == produto.id) {
+              if (produto.quantidade == 0) {
+                add.splice(index, 1);
+              } else {
+                add.splice(index, 1);
+                add.push(produto);
+              }
+            }
+          });
+        }
+      }
+    },
+    acabouEstoque() {
+      const msg = document.querySelector(".msg");
 
-                                                                      if(produto.quantidade == 0){
-                                                                                add.splice(index, 1)
-                                                                      }else{
-                                                                                add.splice(index,1)
-                                                                                add.push(produto)
-                                                                      }
-                                                            }
-                                                  })
-                                        }
-                              }
-                    },
-                    acabouEstoque(){
-                              const msg = document.querySelector(".msg");
+      this.mensagem = "O estoque  deste produto acabou";
 
-                              this.mensagem = "O estoque  deste produto acabou"
+      msg.style.z_index = "500";
+      msg.style.display = "block";
 
-                              msg.style.z_index = "500"
-                              msg.style.display = "block"
+      setTimeout(() => {
+        msg.style.display = "none";
+        msg.style.z_index = "0";
+        this.mensagem = "";
+      }, 1500);
+    },
+    async enviaPedido(pedido) {
+      if (
+        this.pedidoMontado.acais.length != 0 ||
+        this.pedidoMontado.adicionais.length != 0
+      ) {
+        const acais = this.pedidoMontado.acais;
+        const adicionais = this.pedidoMontado.adicionais;
 
-                              setTimeout(()=>{
-                                        msg.style.display = "none"
-                                        msg.style.z_index = "0"
-                                        this.mensagem = ""
-                              }, 1500)
-                    },
-                    async enviaPedido(pedido){
+        const pedidos = "http://localhost:3000/pedidos";
 
-                              if(this.pedidoMontado.acais.length !=  0 || this.pedidoMontado.adicionais.length != 0){
-                                        const acais = this.pedidoMontado.acais;
-                                        const adicionais = this.pedidoMontado.adicionais;
-                                        
-                                        const pedidos = "http://localhost:3000/pedidos";
+        await fetch(pedidos)
+          .then((r) => r.json())
+          .then((r) => {
+            let numId = 0;
+            r.forEach(() => {
+              numId += 1;
+            });
+            pedido.id = `${numId}`;
+          });
+        if (pedido.nome != "") {
+          await fetch(pedidos, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pedido),
+          });
+          acais.forEach((produto) => {
+            fetch(`http://localhost:3000/acais/${produto.id}`)
+              .then((response) => response.json())
+              .then((response) => {
+                response.estoque = response.estoque - produto.quantidade * 25;
 
-                                        await fetch(pedidos).then(r => r.json()).then(r=>{
-                                                  let numId =0
-                                                  r.forEach(() =>{
-                                                            numId+=1
-                                                            console.log(r);
-                                                  })
-                                                  pedido.id = `${numId}`
-                                        })
-                                        if(pedido.nome != ""){
-                                                  await fetch(pedidos, {
-                                                            method: "POST",
-                                                            headers:{
-                                                                      "Content-Type": "application/json"
-                                                            },
-                                                            body: JSON.stringify(pedido)
-                                                  })
-                                                  acais.forEach( produto =>{
-                                                            
-                                                            fetch(`http://localhost:3000/acais/${produto.id}`)
-                                                            .then( response => response.json())
-                                                            .then( response => {
-                                                            
-                                                                      response.estoque = response.estoque - (produto.quantidade * 25)
+                fetch(`http://localhost:3000/acais/${produto.id}`, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(response),
+                });
+              });
+          });
+          adicionais.forEach((produto) => {
+            fetch(`http://localhost:3000/adicionais/${produto.id}`)
+              .then((response) => response.json())
+              .then((response) => {
+                response.estoque = response.estoque - produto.quantidade;
 
-                                                                      fetch(`http://localhost:3000/acais/${produto.id}`, {
-                                                                                method: "PUT",
-                                                                                headers:{
-                                                                                          "Content-Type": "application/json"
-                                                                                },
-                                                                                body: JSON.stringify(response)
-                                                                      })
-                                                            })
-                                                            
-                                                  })
-                                                  adicionais.forEach( produto =>{
-                                                            
-                                                            fetch(`http://localhost:3000/adicionais/${produto.id}`)
-                                                            .then( response => response.json())
-                                                            .then( response => {
+                fetch(`http://localhost:3000/adicionais/${produto.id}`, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(response),
+                });
+              });
+          });
+        }
+      }
+    },
+    async fetchDB() {
+      const acais = "http://localhost:3000/acais";
+      const adicionais = "http://localhost:3000/adicionais";
 
-                                                                                response.estoque = response.estoque - produto.quantidade
-
-                                                                                fetch(`http://localhost:3000/adicionais/${produto.id}`, {
-                                                                                          method: "PUT",
-                                                                                          headers:{
-                                                                                                    "Content-Type": "application/json"
-                                                                                          },
-                                                                                          body: JSON.stringify(response)
-                                                                                })
-                                                                      })
-                                                                      
-                                                            })
-                                                  }  
-                              }
-
-                                                   
-                    },
-                    async fetchDB(){
-                    
-                    const acais = "http://localhost:3000/acais"
-                    const adicionais = "http://localhost:3000/adicionais"
-
-                    
-                    await fetch(acais).then(r => r.json()).then(r=>{
-                              this.acais = r
-                    })
-                    await fetch(adicionais).then(r => r.json()).then(r=>{
-                              this.adicionais = r
-                    })
-                    }
-          },
-          components:{
-                    CardComponent,
-                    VisualizaPedido
-          },
-          created(){
-                    this.fetchDB()
-          }
-}
+      await fetch(acais)
+        .then((r) => r.json())
+        .then((r) => {
+          this.acais = r;
+        });
+      await fetch(adicionais)
+        .then((r) => r.json())
+        .then((r) => {
+          this.adicionais = r;
+        });
+    },
+  },
+  components: {
+    CardComponent,
+    VisualizaPedido,
+  },
+  created() {
+    this.fetchDB();
+  },
+};
 </script>
 
 <style>
@@ -471,6 +403,6 @@ export default {
 }
 
 .visualiza-pedido {
-          position: fixed;
+  position: fixed;
 }
 </style>

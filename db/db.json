@@ -132,11 +132,7 @@
       "id": "9",
       "acai": false,
       "nome": "Adicional de Uva Verde",
-<<<<<<< HEAD
       "estoque": 0,
-=======
-      "estoque": 6,
->>>>>>> 835d38c05f19a36eb8cd51995a8fc3787035bf24
       "unidade": "UN",
       "valor": 1,
       "imagem": "adic-uvaVerde"
@@ -145,8 +141,8 @@
   "pedidos": [],
   "concluidos": [
     {
-      "id": "1",
-      "nome": "pedido de teste",
+      "id": "0",
+      "nome": "teste 1",
       "forma_pagamento": "Dinheiro",
       "total": 10,
       "acais": [
@@ -195,8 +191,8 @@
       ]
     },
     {
-      "id": "0",
-      "nome": "filipe viado",
+      "id": "2",
+      "nome": "teste 3",
       "forma_pagamento": "Dinheiro",
       "total": 2.7475,
       "adicionais": [
@@ -211,8 +207,8 @@
       ]
     },
     {
-      "id": "1",
-      "nome": "Bruno Ramos Oliveira dos Santos Oliveira dos Santos",
+      "id": "3",
+      "nome": "teste 4",
       "forma_pagamento": "Dinheiro",
       "total": 4.1925,
       "adicionais": [
@@ -225,11 +221,10 @@
           "quantidade": 2
         }
       ]
-<<<<<<< HEAD
     },
     {
-      "id": "0",
-      "nome": "teste",
+      "id": "4",
+      "nome": "teste 5",
       "forma_pagamento": "Dinheiro",
       "total": 3,
       "adicionais": [
@@ -242,8 +237,29 @@
           "quantidade": 3
         }
       ]
-=======
->>>>>>> 835d38c05f19a36eb8cd51995a8fc3787035bf24
+    },
+    {
+      "id": "5",
+      "nome": "teste 6",
+      "forma_pagamento": "Dinheiro",
+      "total": 1.9224999999999999,
+      "adicionais": [
+        {
+          "id": "8",
+          "acai": false,
+          "nome": "Adicional de Pacoca",
+          "valor": 1,
+          "imagem": "adic-pacoca",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nome": "teste 7",
+      "forma_pagamento": "Dinheiro",
+      "total": 0.6974999999999999,
+      "adicionais": []
     }
   ]
 }

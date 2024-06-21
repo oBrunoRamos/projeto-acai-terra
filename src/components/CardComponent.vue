@@ -3,24 +3,99 @@
     <div class="div-img">
       <!-- Imagem do Produto -->
 
-                    <!-- Imagens Açais -->
-                    <img v-if="produto.imagem == 'acai-tradicional' " class="imagem" src="../assets/acais/acai-tradicional.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'acai-abacaxi' " class="imagem" src="../assets/acais/acai-abacaxi.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'acai-banana' " class="imagem" src="../assets/acais/acai-banana.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'acai-cupuacu' " class="imagem" src="../assets/acais/acai-cupuacu.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'acai-guarana' " class="imagem" src="../assets/acais/acai-guarana.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'acai-morango' " class="imagem" src="../assets/acais/acai-morango.png" :alt="produto.alt">
+      <!-- Imagens Açais -->
+      <img
+        v-if="produto.imagem == 'acai-tradicional'"
+        class="imagem"
+        src="../assets/acais/acai-tradicional.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-abacaxi'"
+        class="imagem"
+        src="../assets/acais/acai-abacaxi.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-banana'"
+        class="imagem"
+        src="../assets/acais/acai-banana.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-cupuacu'"
+        class="imagem"
+        src="../assets/acais/acai-cupuacu.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-guarana'"
+        class="imagem"
+        src="../assets/acais/acai-guarana.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'acai-morango'"
+        class="imagem"
+        src="../assets/acais/acai-morango.png"
+        :alt="produto.alt"
+      />
 
-                    <!-- Imagens Adicionais -->
-                    <img v-if="produto.imagem == 'adic-amendoim' " class="imagem" src="../assets/adicionais/adic-amendoim.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-banana' " class="imagem" src="../assets/adicionais/adic-banana.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-granola' " class="imagem" src="../assets/adicionais/adic-granola.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-kiwi' " class="imagem" src="../assets/adicionais/adic-kiwi.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-leiteCondensado' " class="imagem" src="../assets/adicionais/adic-leiteCondensado.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-leiteNinho' " class="imagem" src="../assets/adicionais/adic-leiteNinho.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-morango' " class="imagem" src="../assets/adicionais/adic-morango.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-pacoca' " class="imagem" src="../assets/adicionais/adic-pacoca.png" :alt="produto.alt">
-                    <img v-if="produto.imagem == 'adic-uvaVerde' " class="imagem" src="../assets/adicionais/adic-uvaVerde.png" :alt="produto.alt">
+      <!-- Imagens Adicionais -->
+      <img
+        v-if="produto.imagem == 'adic-amendoim'"
+        class="imagem"
+        src="../assets/adicionais/adic-amendoim.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-banana'"
+        class="imagem"
+        src="../assets/adicionais/adic-banana.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-granola'"
+        class="imagem"
+        src="../assets/adicionais/adic-granola.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-kiwi'"
+        class="imagem"
+        src="../assets/adicionais/adic-kiwi.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-leiteCondensado'"
+        class="imagem"
+        src="../assets/adicionais/adic-leiteCondensado.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-leiteNinho'"
+        class="imagem"
+        src="../assets/adicionais/adic-leiteNinho.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-morango'"
+        class="imagem"
+        src="../assets/adicionais/adic-morango.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-pacoca'"
+        class="imagem"
+        src="../assets/adicionais/adic-pacoca.png"
+        :alt="produto.alt"
+      />
+      <img
+        v-if="produto.imagem == 'adic-uvaVerde'"
+        class="imagem"
+        src="../assets/adicionais/adic-uvaVerde.png"
+        :alt="produto.alt"
+      />
 
       <h4>{{ produto.nome }}</h4>
 
@@ -60,7 +135,7 @@ export default {
   },
   props: {
     produto: Object,
-    quantidade:Array
+    atualiza: Object,
   },
   data() {
     return {
@@ -75,6 +150,19 @@ export default {
         currency: "BRL",
       });
       this.valorConvertido = valor;
+    },
+    atualizaQuant() {
+      setTimeout(() => {
+        const produto = this.produto;
+        const atualizado = this.atualiza;
+
+        if(produto.nome == atualizado.nome){
+          this.quant = atualizado.quantidade
+
+          console.log(produto, atualizado);
+        }
+
+      }, 100);
     },
   },
   watch: {
@@ -123,6 +211,9 @@ export default {
   created() {
     this.converteValor();
   },
+  updated() {
+    this.atualizaQuant();
+  },
 };
 </script>
 
@@ -156,7 +247,6 @@ export default {
   height: 90%;
   width: 80%;
 
-
   border-radius: 5px;
 }
 .di-img img {
@@ -165,7 +255,6 @@ export default {
   width: fit-content;
 }
 
-
 /* Div com preço do produto */
 .div-preco {
   display: flex;
@@ -173,7 +262,6 @@ export default {
   justify-content: space-between;
   align-items: end;
   padding: 5px 0;
-  
 }
 
 /* Div com contador */
@@ -183,7 +271,6 @@ export default {
   align-items: center;
 
   padding: 10px 0;
-
 
   height: 30px;
   width: min-content;
